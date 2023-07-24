@@ -113,8 +113,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void lockUser(User user) {
-        // user with id == 1 - admin
-        if (user.getId() == 1) {
+        if (user.getUserGroups().contains(groupService.getByName("ROLE_ADMINISTRATOR"))) {
             throw new LockedException("Can't lock the ADMINISTRATOR!");
         }
         if (user.getFailedAttempts() >= AuthenticationEventHandler.MAX_FAILED_ATTEMPTS) {
